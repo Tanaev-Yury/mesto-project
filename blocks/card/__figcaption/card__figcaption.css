@@ -1,0 +1,14 @@
+.card__figcaption {
+  display: flex;
+  justify-content: space-between;
+  background-color: #ffffff;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  min-height: calc(361px - 282px);
+}
+
+@media screen and (max-width: 1279px) {
+  .card__figcaption {
+    max-width: 282px;
+  }
+}

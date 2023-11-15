@@ -1,0 +1,32 @@
+.popup__save {
+  min-width: 358px;
+  min-height: 50px;
+  background: #000000;
+  border-radius: 2px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+  color: #ffffff;
+  margin-top: 53px;
+  opacity: 1;
+  transition: opacity 1s ease;
+  cursor: pointer;
+  margin-bottom: 37px;
+}
+
+.popup__save:hover {
+  opacity: 0.8;
+}
+
+@media screen and (max-width: 1279px) {
+  .popup__save {
+    min-width: 238px;
+    min-height: 46px;
+    font-size: 14px;
+    line-height: 17px;
+    margin-top: 45px;
+    margin-bottom: 25px;
+  }
+}

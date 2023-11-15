@@ -1,0 +1,25 @@
+.popup__field {
+  border: none;
+  box-sizing: border-box;
+  min-width: 358px;
+  min-height: 27px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  border-bottom: 1px solid rgb(0,0,0, 0.2);
+}
+
+.popup__field:last-of-type {
+  margin-top: 30px;
+}
+
+.popup__field:focus {
+  outline-color: #42aaff;
+}
+
+@media screen and (max-width: 1279px) {
+  .popup__field {
+    min-width: 238px;
+  }
+}

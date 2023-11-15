@@ -1,0 +1,16 @@
+.avatar {
+  background-image: url(../../images/avatar.jpg);
+  min-width: 120px;
+  max-height: 120px;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 50%;
+  object-fit: cover;
+  aspect-ratio: 1/1;
+}
+@media screen and (max-width: 1279px) {
+  .avatar {
+    margin: auto;
+    margin-bottom: 22.25px;
+  }
+}

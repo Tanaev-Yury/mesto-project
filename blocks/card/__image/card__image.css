@@ -1,0 +1,8 @@
+.card__image {
+  min-width: 282px;
+  max-height: 282px;
+  display: block;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  aspect-ratio: 1/1;
+}

@@ -1,0 +1,18 @@
+.card__card-button {
+  min-width: 22px;
+  min-height: 19px;
+  box-sizing: border-box;
+  align-self: center;
+  margin-right: 20px;
+  background-image: url(../../../images/like-button.svg);
+  background-color: transparent;
+  border: none;
+  opacity: 1;
+  transition: opacity 1s ease;
+  cursor: pointer;
+}
+
+.card__card-button:hover {
+  opacity: 0.5;
+}
+
