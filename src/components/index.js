@@ -1,4 +1,4 @@
-import { openPopup, closePopup, closeEsc, closeOverlay } from "./modal.js";
+import { openPopup, closePopup } from "./modal.js";
 import { initialCards, createCard } from "./card.js";
 import "../pages/index.css";
 //Попап профиля
@@ -25,6 +25,22 @@ const addButton = document.querySelector(".profile__add-button");
 const cardSection = document.querySelector(".elements");
 const cardTemplate = document.querySelector("#card-template").content;
 
+/* TODO: Понять что происходит, уменьшить количество кода
+
+ const popups = document.querySelectorAll('.popup')
+
+      popups.forEach((popup) => {
+          popup.addEventListener('mousedown', (evt) => {
+              if (evt.target.classList.contains('popup_opened')) {
+                  closePopup(popup)
+              }
+              if (evt.target.classList.contains('popup__close')) {
+                closePopup(popup)
+              }
+          })
+      })
+ */
+
 //Сохранение значений
 function savePopupProfile(evt) {
   evt.preventDefault();
@@ -46,7 +62,6 @@ renderCard(initialCards);
 
 function submitFormCard(evt) {
   evt.preventDefault();
-
   cardSection.prepend(createCard(nameInputCard.value, urlInputCard.value));
   closePopup(popupCard);
 }
@@ -58,10 +73,13 @@ addButton.addEventListener("click", function () {
   openPopup(popupCard);
 });
 editButton.addEventListener("click", function () {
+  valueName.textContent = nameInput.value;
+  valueJob.textContent = jobInput.value;
   openPopup(popupProfile);
 });
 popupButtonClose.addEventListener("click", function () {
   closePopup(popupProfile);
+
 });
 popupButtonCardClose.addEventListener("click", function () {
   closePopup(popupCard);
@@ -69,10 +87,9 @@ popupButtonCardClose.addEventListener("click", function () {
 popupButtonImgClose.addEventListener("click", function () {
   closePopup(popupImg);
 });
-document.addEventListener("keydown", closeEsc);
-document.addEventListener("mousedown", closeOverlay);
+
 //Сохранение значений профиля
 formElement.addEventListener("submit", savePopupProfile);
 
-export { cardTemplate, nameInputCard, urlInputCard, photoFigcaption, photoImg };
+export { cardTemplate, nameInputCard, urlInputCard, photoFigcaption, photoImg, formCard };
 export { popupProfile, popupCard, popupImg };

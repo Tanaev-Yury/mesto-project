@@ -1,32 +1,31 @@
-import { popupProfile, popupCard, popupImg } from "./index.js";
+import {formCard } from "./index.js";
 //Открыть попапы
 function openPopup(popupElement) {
+  formCard.reset();
   popupElement.classList.add("popup_opened");
+  document.addEventListener("keydown", closeEsc);
+  document.addEventListener("mousedown", closeOverlay);
 }
 
 //Закрыть попапы
 function closePopup(popupElement) {
   popupElement.classList.remove("popup_opened");
+  document.removeEventListener("keydown", closeEsc);
+  document.removeEventListener("mousedown", closeOverlay);
 }
 
 // Закрытие кнопкой
 function closeEsc(evt) {
   if (evt.key === "Escape") {
-    closePopup(popupProfile);
-    closePopup(popupCard);
-    closePopup(popupImg);
+    const openedPopup = document.querySelector(".popup_opened");
+    closePopup(openedPopup);
   }
 }
 //Закрытие кликом по оверлею
 function closeOverlay(evt) {
-  if (
-    evt.target === popupProfile ||
-    evt.target === popupCard ||
-    evt.target === popupImg
-  ) {
-    closePopup(popupProfile);
-    closePopup(popupCard);
-    closePopup(popupImg);
+  const openedPopup = document.querySelector(".popup_opened");
+  if (evt.target === openedPopup) {
+    closePopup(openedPopup);
   }
 }
 
