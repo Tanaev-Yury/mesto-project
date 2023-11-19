@@ -52,8 +52,24 @@ function savePopupProfile(evt) {
 
 function renderCard(initialCards) {
   initialCards.forEach(function (item) {
-    cardSection.append(createCard(item.name, item.link));
+    cardSection.append(createCard(item.name, item.link, deleteCard, likeCard, handleClick));
   });
+}
+
+function deleteCard(evt) {
+  evt.target.closest(".card").remove();
+}
+function likeCard(evt) { 
+
+  evt.target.classList.toggle("card__card-button_active"); 
+
+} 
+
+function handleClick(evt) {
+  photoImg.src = evt.target.src; 
+  photoFigcaption.textContent = evt.target.closest(".card").textContent; 
+  photoImg.alt = evt.target.alt; 
+      openPopup(popupImg)
 }
 
 renderCard(initialCards);
@@ -62,7 +78,7 @@ renderCard(initialCards);
 
 function submitFormCard(evt) {
   evt.preventDefault();
-  cardSection.prepend(createCard(nameInputCard.value, urlInputCard.value));
+  cardSection.prepend(createCard(nameInputCard.value, urlInputCard.value,deleteCard, likeCard, handleClick));
   closePopup(popupCard);
 }
 
@@ -70,11 +86,12 @@ function submitFormCard(evt) {
 formCard.addEventListener("submit", submitFormCard);
 // Слушатель открыть/закрыть попапы
 addButton.addEventListener("click", function () {
+  formCard.reset();
   openPopup(popupCard);
 });
 editButton.addEventListener("click", function () {
-  valueName.textContent = nameInput.value;
-  valueJob.textContent = jobInput.value;
+  nameInput.value = valueName.textContent;
+  jobInput.value = valueJob.textContent;
   openPopup(popupProfile);
 });
 popupButtonClose.addEventListener("click", function () {

@@ -1,7 +1,5 @@
-import {formCard } from "./index.js";
 //Открыть попапы
 function openPopup(popupElement) {
-  formCard.reset();
   popupElement.classList.add("popup_opened");
   document.addEventListener("keydown", closeEsc);
   document.addEventListener("mousedown", closeOverlay);
