@@ -31,23 +31,29 @@
       <div class="popup__container">
         <button class="popup__close" type="button"></button>
         <h2 class="popup__title">Новое место</h2>
-        <form class="popup__form" name="form">
+        <form class="popup__form" name="form" novalidate>
           <input
             class="popup__field popup__field_value_name"
             type="text"
             placeholder="Название"
             value=""
-            name="fieldTitle"
+            minlength="2"
+            maxlength="30"
             required
+            id="fieldTitle"
+            pattern="[A-Za-zА-Яа-яЁё\-\s]+"
+            data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
           />
+          <span class="fieldTitle-error"></span>
           <input
             class="popup__field popup__field_value_description"
-            type="text"
+            type="url"
             placeholder="Ссылка на картинку"
             value=""
-            name="fieldUrl"
             required
+            id="fieldUrl"
           />
+          <span class="fieldUrl-error"></span>
           <button class="popup__save" type="submit">Создать</button>
         </form>
       </div>
@@ -65,21 +71,45 @@
             type="text"
             placeholder="Имя"
             value="Жак-Ив Кусто"
-            name="fieldName"
             minlength="2"
             maxlength="40"
             required
+            id="fieldName"
+            pattern="[A-Za-zА-Яа-яЁё\-\s]+"
+            data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
           />
+          <span class="fieldName-error"></span>
           <input
             class="popup__field popup__field_value_description"
             type="text"
             placeholder="О себе"
             value="Исследователь океана"
-            name="fieldDescription"
             minlength="2"
             maxlength="200"
             required
+            id="fieldDescription"
+            pattern="[A-Za-zА-Яа-яЁё\-\s]+"
+            data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
           />
+          <span class="fieldDescription-error"></span>
+          <button class="popup__save" type="submit">Сохранить</button>
+        </form>
+      </div>
+    </section>
+    <section class="popup popup_avatar">
+      <div class="popup__container">
+        <button class="popup__close" type="button"></button>
+        <h2 class="popup__title">Обновить аватар</h2>
+        <form class="popup__form" name="form" novalidate>
+          <input
+            class="popup__field"
+            type="url"
+            name="link"
+            id="avatarUrl"
+            placeholder="Ссылка на картинку"
+            required
+          />
+          <span class="avatarUrl-error"></span>
           <button class="popup__save" type="submit">Сохранить</button>
         </form>
       </div>
@@ -90,8 +120,12 @@
         <img class="card__image" src="" alt="" />
         <div class="card__figcaption">
           <h2 class="card__title"></h2>
-          <button class="card__card-button" type="button"></button>
+          <div class="card__like-group">
+            <button class="card__like-button" type="button"></button>
+            <div class="card__like-counter"></div>
+          </div>
         </div>
+        <div></div>
       </article>
     </template>
     <section class="popup popup_photo">
