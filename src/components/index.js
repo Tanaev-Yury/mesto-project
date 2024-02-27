@@ -2,14 +2,12 @@ import { openPopup, closePopup } from "./modal.js";
 import "../pages/index.css";
 import { enableValidation, clearValidation } from "./validation.js";
 import {
-  getInitialCards,
+  getInitialData,
   changeAvatar,
   saveProfileValue,
   addNewCard,
-  deleteCardImg,
-  likeCard,
-  deleteLikeCard,
 } from "./api.js";
+import { handleCardDelete, handleCardLike } from "./card.js";
 const validationConfig = {
   formSelector: ".popup__form",
   inputSelector: ".popup__field",
@@ -18,6 +16,9 @@ const validationConfig = {
   inputErrorClass: "popup__field_type_error",
   errorClass: "popup__field-error_active",
 };
+import { createCard } from "./card.js";
+
+let userId = "";
 
 const popupProfile = document.querySelector(".popup_profile");
 const profileFormElement = popupProfile.querySelector(".popup__form");
@@ -38,11 +39,11 @@ const userAvatar = document.querySelector(".avatar");
 const editButton = document.querySelector(".profile__edit-button");
 const nameInputCard = popupCard.querySelector(".popup__field_value_name");
 const urlInputCard = popupCard.querySelector(".popup__field_value_description");
+const submitCard = popupCard.querySelector(".popup__save");
 
 const popupButtonImgClose = document.querySelector(".popup__close_photo");
 const formCard = document.querySelector(".popup__form");
 const addButton = document.querySelector(".profile__add-button");
-const cardTemplate = document.querySelector("#card-template").content;
 const photoImg = document.querySelector(".popup__image");
 const photoFigcaption = document.querySelector(".popup__figcaption");
 const valueName = document.querySelector(".profile__title");
@@ -71,16 +72,15 @@ const savePopupProfile = (evt) => {
 
 const handleCardFormSubmit = (evt) => {
   evt.preventDefault();
-  submitButtonProfile.textContent = "Сохранение...";
+  submitCard.textContent = "Сохранение...";
   addNewCard(nameInputCard.value, urlInputCard.value)
     .then((res) => {
       cardSection.prepend(
         createCard(
           res,
           res.owner._id,
-          deleteCardImg,
-          likeCard,
-          deleteLikeCard,
+          handleCardDelete,
+          handleCardLike,
           openImagePopup
         )
       );
@@ -92,7 +92,7 @@ const handleCardFormSubmit = (evt) => {
       console.log(err);
     })
     .finally(() => {
-      submitButtonProfile.textContent = "Сохранить";
+      submitCard.textContent = "Сохранить";
     });
 };
 
@@ -110,6 +110,7 @@ editButton.addEventListener("click", function () {
 });
 userAvatar.addEventListener("click", function () {
   clearValidation(avatarForm, validationConfig);
+  saveAvatar.reset();
   openPopup(avatarForm);
 });
 popupProfileButtonClose.addEventListener("click", function () {
@@ -131,8 +132,14 @@ saveAvatar.addEventListener("submit", (evt) => {
   const submitButton = form.querySelector(".popup__save");
   submitButton.textContent = "Сохранение...";
   changeAvatar(avatarInput.value)
+    .then((data) => {
+      userAvatar.style.backgroundImage = `url(${data.avatar})`;
+    })
     .then(() => {
       closePopup(avatarForm);
+    })
+    .catch((err) => {
+      console.log(err);
     })
     .finally(() => {
       submitButton.textContent = "Сохранить";
@@ -146,50 +153,27 @@ profileFormElement.addEventListener("submit", savePopupProfile);
 enableValidation(validationConfig);
 //взаимодействие с сервером
 
-getInitialCards();
-
-const createCard = (
-  card,
-  userId,
-  deleteCardImg,
-  likeCard,
-  deleteLikeCard,
-  openImagePopup
-) => {
-  const newCardElement = cardTemplate.querySelector(".card").cloneNode(true);
-  const cardLikeCounter = newCardElement.querySelector(".card__like-counter");
-  const likeButton = newCardElement.querySelector(".card__like-button");
-  cardLikeCounter.textContent = card.likes.length;
-  newCardElement.querySelector(".card__image").src = card.link; //(Можно лучше ПР7 ревью от 26.02) убрать повторы поиска элемента
-  newCardElement.querySelector(".card__title").textContent = card.name;
-  newCardElement.querySelector(".card__image").alt = card.name;
-  let isLiked = card.likes.some((like) => like._id === userId);
-  if (card.owner._id !== userId) {
-    newCardElement.querySelector(".card__delete-button").style.display = "none";
-  }
-  newCardElement
-    .querySelector(".card__delete-button") //(Можно лучше ПР7 ревью от 26.02) Навешивание обработчика лучше переместить в else
-    .addEventListener("click", () => {
-      deleteCardImg(card._id, newCardElement);
+getInitialData()
+  .then(([initialCards, userInfo]) => {
+    userId = userInfo._id;
+    initialCards.forEach((card) => {
+      cardSection.append(
+        createCard(
+          card,
+          userId,
+          handleCardDelete,
+          handleCardLike,
+          openImagePopup
+        )
+      );
     });
-  newCardElement
-    .querySelector(".card__like-button")
-    .addEventListener("click", () => {
-      if (isLiked) {
-        deleteLikeCard(card._id, likeButton, cardLikeCounter, () => {
-          isLiked = false;
-        });
-      } else {
-        likeCard(card._id, likeButton, cardLikeCounter, () => {
-          isLiked = true;
-        });
-      }
-    });
-  newCardElement
-    .querySelector(".card__image")
-    .addEventListener("click", () => openImagePopup(card.link, card.name));
-  return newCardElement;
-};
+    valueName.textContent = userInfo.name;
+    valueJob.textContent = userInfo.about;
+    userAvatar.style.backgroundImage = `url(${userInfo.avatar})`;
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 const openImagePopup = (link, name) => {
   photoImg.src = link;
@@ -206,4 +190,5 @@ export {
   userAvatar,
   cardSection,
   submitButtonProfile,
+  userId,
 };

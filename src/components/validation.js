@@ -1,12 +1,17 @@
 function toggleButtonState(inputList, buttonElement) {
   if (hasInvalidInput(inputList)) {
-    buttonElement.classList.add("popup__save_inactive");
-    buttonElement.disabled = true;
+    disableButton(buttonElement);
   } else {
     buttonElement.classList.remove("popup__save_inactive");
     buttonElement.disabled = false;
   }
 }
+
+function disableButton(buttonElement) {
+  buttonElement.classList.add("popup__save_inactive");
+  buttonElement.disabled = true;
+}
+
 function hasInvalidInput(inputList) {
   return inputList.some((input) => {
     return !input.validity.valid;
@@ -16,8 +21,6 @@ function hasInvalidInput(inputList) {
 function enableValidation(config) {
   const formList = Array.from(document.querySelectorAll(config.formSelector));
   formList.forEach((form) => {
-    form.addEventListener("submit", function () {
-    });
     setEventListeners(form, config);
   });
 
@@ -72,7 +75,7 @@ function clearValidation(form, validationConfig) {
     validationConfig.submitButtonSelector
   );
   if (buttonElement !== null) {
-    toggleButtonState(inputList, buttonElement);
+    disableButton(buttonElement);
   }
 }
 
