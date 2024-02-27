@@ -134,8 +134,6 @@ saveAvatar.addEventListener("submit", (evt) => {
   changeAvatar(avatarInput.value)
     .then((data) => {
       userAvatar.style.backgroundImage = `url(${data.avatar})`;
-    })
-    .then(() => {
       closePopup(avatarForm);
     })
     .catch((err) => {

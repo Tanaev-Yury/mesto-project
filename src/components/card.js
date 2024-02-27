@@ -39,24 +39,26 @@ export const createCard = (
 };
 
 export const handleCardDelete = (cardId, cardElement) => {
-  deleteCardImg(cardId).then(() => {
-    deleteCard(cardElement).catch((err) => {
+  deleteCardImg(cardId)
+    .then(() => {
+      deleteCard(cardElement);
+    })
+    .catch((err) => {
       console.log(err);
     });
-  });
 };
 
 export const deleteCard = (cardElement) => {
   cardElement.remove();
 };
 
-const updateCardLike = (likeButton, cardLikeCounter, isLiked) => {
+const updateCardLike = (likeButton, cardLikeCounter, isLiked, likesCount) => {
   if (isLiked) {
     likeButton.classList.add("card__like-button_active");
-    cardLikeCounter.textContent++;
+    cardLikeCounter.textContent = likesCount;
   } else {
     likeButton.classList.remove("card__like-button_active");
-    cardLikeCounter.textContent--;
+    cardLikeCounter.textContent = likesCount;
   }
 };
 
@@ -65,16 +67,16 @@ export const handleCardLike = (cardId, likeButton, cardLikeCounter) => {
 
   if (isLiked) {
     deleteLikeCard(cardId)
-      .then(() => {
-        updateCardLike(likeButton, cardLikeCounter, false);
+      .then(({likes}) => {
+        updateCardLike(likeButton, cardLikeCounter, false, likes.length);
       })
       .catch((err) => {
         console.log(err);
       });
   } else {
     likeCard(cardId)
-      .then(() => {
-        updateCardLike(likeButton, cardLikeCounter, true);
+      .then(({likes}) => {
+        updateCardLike(likeButton, cardLikeCounter, true, likes.length);
       })
       .catch((err) => {
         console.log(err);
