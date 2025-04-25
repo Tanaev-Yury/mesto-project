@@ -13,7 +13,7 @@
 6. Настроена сборка, транспиляция JavaScript и минификация кода с помощью webpack`a и его друзей.
 7. Сайт подключен к серверу, получает, отдаёт и сохраняет данные.
 
-### [Ссылка на сайт](https://quacevizz.github.io/mesto-project-ff/ "Переход на страницу с проектом")
+### [Ссылка на сайт](https://tanaev-yury.github.io/mesto-project-ff/ "Переход на страницу с проектом")
 
 **Figma**
 * [Ссылка на макет в Figma](https://www.figma.com/file/2cn9N9jSkmxD84oJik7xL7/JavaScript.-Sprint-4?node-id=0%3A1)
