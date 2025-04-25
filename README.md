@@ -11,7 +11,7 @@
 4. Плавное открытие и закрытие всех popup`ов
 5. Продемонстрирована работа с массивами, DOM, JS. 
 
-### [Ссылка на сайт](https://quacevizz.github.io/mesto-project/ "Переход на страницу с проектом")
+### [Ссылка на сайт](https://tanaev-yury.github.io/mesto-project/ "Переход на страницу с проектом")
 
 **Figma**
 * [Ссылка на макет в Figma](https://www.figma.com/file/2cn9N9jSkmxD84oJik7xL7/JavaScript.-Sprint-4?node-id=0%3A1)
